@@ -44,7 +44,7 @@ export class ReposService {
         headers = headers.append('Origin', 'evil.com');
         headers = headers.append('Content-Length', payload.length.toString());
         console.log(params.toString());
-        return this.http.post(`http://text-processing.com/api/sentiment/`,
+        return this.http.post(`https://cors-anywhere.herokuapp.com/http://text-processing.com/api/sentiment/`,
             payload
         );
     }
