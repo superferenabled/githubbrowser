@@ -13,6 +13,7 @@ export class SearchBarComponent {
     @ViewChild(ReposComponent) reposChild: ReposComponent;
 
     private searchTerm$ = new Subject<string>();
+    private searchTerm2$ = new Subject<string>();
     private results: any = undefined;
     private loading = false;
 
@@ -20,14 +21,23 @@ export class SearchBarComponent {
         this.activateSearch();
     }
 
-    activateSearch() {
-        this.searchService.search(this.searchTerm$)
+    searchFree() {
+        this.activateSearch();
+    }
+
+    searchByUser() {
+        this.activateSearch(false);
+    }
+
+    activateSearch(freeSearch: boolean = true) {
+        const currentPromise = freeSearch ? this.searchService.search(this.searchTerm$) : this.searchService.search2(this.searchTerm2$);
+        currentPromise
             .pipe(
                 tap( () => {
                     this.loading = true;
                 }),
                 catchError(error => {
-                    this.activateSearch();
+                    this.activateSearch(freeSearch);
                     this.loading = false;
                     this.results = undefined;
                     return Subject.create();

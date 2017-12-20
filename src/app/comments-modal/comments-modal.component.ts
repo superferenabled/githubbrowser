@@ -40,7 +40,7 @@ export class CommentsModalComponent implements OnChanges {
                 .subscribe(results => {
                     this.comments = results;
                     this.comments.forEach(comment => {
-                        comment.mood = 'neutral';
+                        comment.mood = '';
                         this.searchService.getMood(comment.body)
                             .subscribe((mood: any) => {
                                 console.log(mood.label);

@@ -16,6 +16,14 @@ export class ReposService {
         );
     }
 
+    search2(terms: Observable<string>) {
+        return terms.pipe(
+            debounceTime(400),
+            distinctUntilChanged(),
+            switchMap(term => this.getMatches( `user:${term}`))
+        );
+    }
+
     getMatches(search: string) {
         let params = new HttpParams();
         params = params.append('sort', 'stars');
