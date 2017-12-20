@@ -1,0 +1,41 @@
+<div [ngClass]="{'comments-modal':params.showModal===true,'comments-modal__hidden':params.showModal===false}">
+    <label (click)="closeModal()" class="comments-modal__bg"></label>
+    <label (click)="closeModal()" class="comments-modal__close"></label>
+    <div class="comments-modal__inner">
+        <h2>{{params.repoName}} comments...</h2>
+        <ng-container *ngIf="comments; then thenTemplate; else elseTemplate"></ng-container>
+        <ng-template #thenTemplate>
+
+            <ul>
+                <li class="round-wshadow" *ngFor="let comment of comments" >
+                    <div>
+                        <img  class="round-wshadow" src="{{ comment.user.avatar_url }}" />
+                        <a href="{{ comment.user.html_url }}" target="_blank">{{ comment.user.login }}</a>
+                        <a href="{{ comment.html_url }}" class="align-right" title="Original thread" target="_blank">⧉</a>
+                        <span class="comments-modal-mood">
+                            <span [ngSwitch]="comment.mood">
+                            <p *ngSwitchCase="'pos'" title="Positive Comment">
+                                👍
+                            </p>
+                            <p *ngSwitchCase="'neg'" title="Negative Comment">
+                                👎
+                            </p>
+                            <p *ngSwitchDefault title="Neutral Comment">
+                                😐
+                            </p>
+                            </span>
+                        </span>
+                        <span class="comments-modal-comment">{{ comment.body }}</span>
+                        <span class="comments-modal-date">
+                            {{ comment.created_at | date: 'dd/MM/yyyy' }}
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </ng-template>
+        <ng-template #elseTemplate>
+            Loading comments...
+        </ng-template>
+
+    </div>
+</div>

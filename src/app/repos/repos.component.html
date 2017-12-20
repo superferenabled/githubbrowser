@@ -1,0 +1,21 @@
+<ng-container *ngIf="results; then thenTemplate; else elseTemplate">
+</ng-container>
+<ng-template #thenTemplate>
+    <ul>
+        <li class="round-wshadow" *ngFor="let item of results.items" (click)="showComments(item.full_name)">
+            <img  class="round-wshadow" src="{{ item.owner.avatar_url }}" />
+            <!--<a href="{{ item.html_url }}" target="_blank">-->
+                {{ item.full_name }}
+            <!--</a> -->
+            <span>
+                ★ {{ item.stargazers_count }}
+            </span>
+        </li>
+    </ul>
+</ng-template>
+<ng-template #elseTemplate>
+    <span class="no-results">
+        Not results to show.
+    </span>
+</ng-template>
+<app-comments-modal [(params)]="modalParams"></app-comments-modal>

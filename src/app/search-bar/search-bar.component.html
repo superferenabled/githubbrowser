@@ -1,0 +1,9 @@
+<div class="search-panel">
+    <form>
+        <div>
+            <input type="text" placeholder="Enter search term" (keyup)="searchTerm$.next($event.target.value)">
+        </div>
+    </form>
+    <div *ngIf="loading">Loading...</div>
+    <app-repos [(results)]="results"></app-repos>
+</div>
